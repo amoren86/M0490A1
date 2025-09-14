@@ -3,23 +3,22 @@ package procesbuilder.example;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.List;
 
 public class ListFiles {
-	// private static final String LIST_FILES = "dir"; //Windows
-	private static final String LIST_FILES = "ls"; // Linux
-	private static final String LONG_LISTING_OPTION = "-l"; // Long listing format
+	// Windows commands (uncomment these lines to test on Windows)
+	// private static final String COMMAND = {"dir", "/n"}; // Windows list files
+	// with long listing format
+
+	private static final String[] COMMAND = { "ls", "-l" }; // Linux list files with long listing format
 
 	public static void main(String[] args) {
 		try {
-			List<String> command = Arrays.asList(LIST_FILES, LONG_LISTING_OPTION);
-			ProcessBuilder pb = new ProcessBuilder(command);
+			ProcessBuilder pb = new ProcessBuilder(COMMAND);
 
 			// Start the process
 			Process process = pb.start();
 
-			System.out.println(String.join(" ", command) + " command output:");
+			System.out.println(String.join(" ", COMMAND) + " command output:");
 
 			// Read the standard output of the process
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));

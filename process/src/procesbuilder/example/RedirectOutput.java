@@ -2,20 +2,20 @@ package procesbuilder.example;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 public class RedirectOutput {
 	private static final String OUTPUT_FILE = "output.txt";
 
-	// private static final String LIST_FILES = "dir"; //Windows
-	private static final String LIST_FILES = "ls"; // Linux
-	private static final String LONG_LISTING_OPTION = "-l"; // Long listing format
+	// Windows commands (uncomment these lines to test on Windows)
+	// private static final String COMMAND = {"dir", "/n"}; // Windows list files
+	// with long listing format
+
+	// Linux commands
+	private static final String[] COMMAND = { "ls", "-l" }; // Linux list files with long listing format
 
 	public static void main(String[] args) {
 		try {
-			List<String> command = Arrays.asList(LIST_FILES, LONG_LISTING_OPTION);
-			ProcessBuilder pb = new ProcessBuilder(command);
+			ProcessBuilder pb = new ProcessBuilder(COMMAND);
 
 			// Redirect standard output to a file
 			pb.redirectOutput(new File(OUTPUT_FILE));
@@ -23,7 +23,7 @@ public class RedirectOutput {
 			// Start the process
 			Process process = pb.start();
 
-			System.out.println(String.join(" ", command) + " command executed. Output redirected to output.txt");
+			System.out.println(String.join(" ", COMMAND) + " command executed. Output redirected to output.txt");
 
 			// Wait for the process to finish
 			int exitCode = process.waitFor();

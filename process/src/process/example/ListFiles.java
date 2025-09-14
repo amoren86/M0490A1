@@ -5,15 +5,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class ListFiles {
-	// private static final String LIST_FILES = "dir"; //Windows
-	private static final String LIST_FILES = "ls"; // Linux
+	// Windows commands (uncomment these lines to test on Windows)
+	// private static final String LIST_FILES_COMMAND = "dir"; //Windows
+
+	// Linux commands
+	private static final String COMMAND = "ls"; // Linux
 
 	public static void main(String[] args) {
 		try {
 			// Run system command to list files
-			Process process = Runtime.getRuntime().exec(LIST_FILES);
+			Process process = Runtime.getRuntime().exec(COMMAND);
 
-			System.out.println(LIST_FILES + " command output:");
+			System.out.println(COMMAND + " command output:");
 
 			// Get an input stream to read the standard output of the process
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
