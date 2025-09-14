@@ -1,21 +1,27 @@
-package process.example;
+package procesbuilder.example;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
 
 public class ListFiles {
 	// private static final String LIST_FILES = "dir"; //Windows
 	private static final String LIST_FILES = "ls"; // Linux
+	private static final String LONG_LISTING_OPTION = "-l"; // Long listing format
 
 	public static void main(String[] args) {
 		try {
-			// Run system command to list files
-			Process process = Runtime.getRuntime().exec(LIST_FILES);
+			List<String> command = Arrays.asList(LIST_FILES, LONG_LISTING_OPTION);
+			ProcessBuilder pb = new ProcessBuilder(command);
 
-			System.out.println(LIST_FILES + " command output:");
+			// Start the process
+			Process process = pb.start();
 
-			// Get an input stream to read the standard output of the process
+			System.out.println(String.join(" ", command) + " command output:");
+
+			// Read the standard output of the process
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
 			String line;
