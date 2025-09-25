@@ -35,6 +35,8 @@ public class ListFiles {
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 			Thread.currentThread().interrupt();
+			System.exit(1);
 		}
+		System.exit(0);
 	}
 }
