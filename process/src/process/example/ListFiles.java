@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 public class ListFiles {
 	// Windows commands (uncomment these lines to test on Windows)
-	// private static final String LIST_FILES_COMMAND = "dir"; //Windows
+	// private static final String COMMAND = "dir"; //Windows
 
 	// Linux commands
 	private static final String COMMAND = "ls"; // Linux
@@ -33,6 +33,8 @@ public class ListFiles {
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 			Thread.currentThread().interrupt();
+			System.exit(1);
 		}
+		System.exit(0);
 	}
 }
