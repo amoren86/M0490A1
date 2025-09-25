@@ -18,6 +18,8 @@ public class LaunchProcess {
 			System.out.println(PROGRAM +" has been closed.");
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
+			System.exit(2);
 		}
+		System.exit(0);
 	}
 }
