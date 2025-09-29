@@ -15,21 +15,21 @@ public class RedirectOutput {
 
 	public static void main(String[] args) {
 		try {
-			ProcessBuilder pb = new ProcessBuilder(COMMAND);
+			ProcessBuilder processBuilder = new ProcessBuilder(COMMAND);
 
 			// Redirect standard output to a file
-			pb.redirectOutput(new File(OUTPUT_FILE));
+			processBuilder.redirectOutput(new File(OUTPUT_FILE));
+			System.out.println("Standard output will be redirected to " + OUTPUT_FILE);
 
 			// Start the process
-			Process process = pb.start();
-
-			System.out.println(String.join(" ", COMMAND) + " command executed. Output redirected to output.txt");
+			Process process = processBuilder.start();
+			System.out.printf("Started process %d: %s%n", process.pid(), String.join(" ", processBuilder.command()));
 
 			// Wait for the process to finish
-			int exitCode = process.waitFor();
-			System.out.println("Process finished with exit code: " + exitCode);
-
-		} catch (IOException | InterruptedException e) {
+			System.out.printf("Process %d exited with code: %d%n", process.pid(), process.waitFor());
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 			Thread.currentThread().interrupt();
 		}

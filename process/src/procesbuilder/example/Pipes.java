@@ -1,9 +1,7 @@
 package procesbuilder.example;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 public class Pipes {
@@ -21,33 +19,36 @@ public class Pipes {
 	public static void main(String[] args) {
 		try {
 			// First process: list files
-			ProcessBuilder pb1 = new ProcessBuilder(COMMAND_1);
-			Process p1 = pb1.start();
+			ProcessBuilder processBuilder1 = new ProcessBuilder(COMMAND_1);
 
 			// Second process: filter results
-			ProcessBuilder pb2 = new ProcessBuilder(COMMAND_2);
-			Process p2 = pb2.start();
+			ProcessBuilder processBuilder2 = new ProcessBuilder(COMMAND_2);
 
-			// Connect output of p1 to input of p2
-			InputStream inputStream = p1.getInputStream();
-			OutputStream outputStream = p2.getOutputStream();
+			// Start both processes
+			Process process1 = processBuilder1.start();
+			Process process2 = processBuilder2.start();
 
-			// Transfer all data from p1 to p2
+			// Print commands and PIDs
+			System.out.printf("Started process %d: %s%n", process1.pid(), String.join(" ", processBuilder1.command()));
+			System.out.printf("Started process %d: %s%n", process2.pid(), String.join(" ", processBuilder2.command()));
+
+			// Connect output of process1 to input of process2
+			InputStream inputStream = process1.getInputStream();
+			OutputStream outputStream = process2.getOutputStream();
+
+			// Transfer all data from process1 to process2
 			inputStream.transferTo(outputStream);
 			outputStream.close(); // Important: close output so p2 knows input is finished
 
-			// Read final output from p2
-			BufferedReader reader = new BufferedReader(new InputStreamReader(p2.getInputStream()));
+			// Print final output from process2
+			process2.getInputStream().transferTo(System.out);
 
-			String line;
-			while ((line = reader.readLine()) != null) {
-				System.out.println(line);
-			}
-
-			// Wait for both processes to finish
-			p1.waitFor();
-			p2.waitFor();
-		} catch (IOException | InterruptedException e) {
+			// Wait for processes to finish
+			System.out.printf("Process %d exited with code: %d%n", process1.pid(), process1.waitFor());
+			System.out.printf("Process %d exited with code: %d%n", process2.pid(), process2.waitFor());
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 			Thread.currentThread().interrupt();
 		}

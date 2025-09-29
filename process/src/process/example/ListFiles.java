@@ -1,8 +1,6 @@
 package process.example;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class ListFiles {
 	// Windows commands (uncomment these lines to test on Windows)
@@ -13,24 +11,20 @@ public class ListFiles {
 
 	public static void main(String[] args) {
 		try {
-			// Run system command to list files
+			// Process list files
 			Process process = Runtime.getRuntime().exec(COMMAND);
 
-			System.out.println(COMMAND + " command output:");
+			// Print command and PID
+			System.out.printf("Started process %d: %s%n", process.pid(), String.join(" ", COMMAND));
 
-			// Get an input stream to read the standard output of the process
-			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			// Print final output from process
+			process.getInputStream().transferTo(System.out);
 
-			String line;
-			while ((line = reader.readLine()) != null) {
-				System.out.println(line);
-			}
-
-			// Wait for the process to finish
-			int exitCode = process.waitFor();
-			System.out.println("Process finished with exit code: " + exitCode);
-
-		} catch (IOException | InterruptedException e) {
+			// Wait for processes to finish
+			System.out.printf("Process %d exited with code: %d%n", process.pid(), process.waitFor());
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 			Thread.currentThread().interrupt();
 		}
