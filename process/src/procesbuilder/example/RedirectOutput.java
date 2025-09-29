@@ -29,9 +29,12 @@ public class RedirectOutput {
 			System.out.printf("Process %d exited with code: %d%n", process.pid(), process.waitFor());
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.exit(1);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			Thread.currentThread().interrupt();
+			System.exit(2);
 		}
+		System.exit(0);
 	}
 }

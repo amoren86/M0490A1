@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class ListFiles {
 	// Windows commands (uncomment these lines to test on Windows)
-	// private static final String LIST_FILES_COMMAND = "dir"; //Windows
+	// private static final String COMMAND = "dir"; //Windows
 
 	// Linux commands
 	private static final String COMMAND = "ls"; // Linux
@@ -24,9 +24,12 @@ public class ListFiles {
 			System.out.printf("Process %d exited with code: %d%n", process.pid(), process.waitFor());
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.exit(1);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			Thread.currentThread().interrupt();
+			System.exit(2);
 		}
+		System.exit(0);
 	}
 }
