@@ -1,4 +1,4 @@
-package runtime.example;
+package runtime;
 
 import java.io.IOException;
 
