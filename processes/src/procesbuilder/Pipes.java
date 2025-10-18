@@ -1,4 +1,4 @@
-package procesbuilder.example;
+package procesbuilder;
 
 import java.io.IOException;
 import java.io.InputStream;

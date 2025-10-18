@@ -1,0 +1,5 @@
+total 8
+drwxrwxr-x 5 xtec xtec 4096 sep 29 01:03 bin
+-rw-rw-r-- 1 xtec xtec    0 sep 29 02:32 doc.txt
+-rw-rw-r-- 1 xtec xtec    0 sep 29 03:59 output.txt
+drwxrwxr-x 5 xtec xtec 4096 sep 22 01:25 src

@@ -1,21 +1,24 @@
-package process.example;
+package procesbuilder;
 
 import java.io.IOException;
 
 public class ListFiles {
 	// Windows commands (uncomment these lines to test on Windows)
-	// private static final String COMMAND = "dir"; //Windows
+	// private static final String COMMAND = {"dir", "/n"}; // Windows list files
+	// with long listing format
 
-	// Linux commands
-	private static final String COMMAND = "ls"; // Linux
+	private static final String[] COMMAND = { "ls", "-l" }; // Linux list files with long listing format
 
 	public static void main(String[] args) {
 		try {
 			// Process list files
-			Process process = Runtime.getRuntime().exec(COMMAND);
+			ProcessBuilder processBuilder = new ProcessBuilder(COMMAND);
+
+			// Start the process
+			Process process = processBuilder.start();
 
 			// Print command and PID
-			System.out.printf("Started process %d: %s%n", process.pid(), String.join(" ", COMMAND));
+			System.out.printf("Started process %d: %s%n", process.pid(), String.join(" ", processBuilder.command()));
 
 			// Print final output from process
 			process.getInputStream().transferTo(System.out);
